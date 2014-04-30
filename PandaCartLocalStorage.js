@@ -19,7 +19,7 @@
 				AppVersion:  "1.0",
 				AppAuthor:   "Emil Maran",
 				AppWebsite:  "maran-emil.de",
-				AppQtyLimit: "5"				
+				AppQtyLimit: "5"
 			};
 
 			var options=$.extend(defaults,options);
