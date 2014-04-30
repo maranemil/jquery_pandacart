@@ -1,0 +1,35 @@
+.product-content { float: left; height: 205px }
+.cart-buttons { float: left; height: 205px }
+
+
+.product { 
+float: left !important; height: 150px; width: 240px; border: 1px solid #333; margin-right: 20px;
+padding: 20px
+}
+img { border: 0px none; }
+.addCart { text-underline: none }
+
+#cookie-log { 
+	width: 850px; border: 1px solid #333; height: 150px; clear: both;
+	background: hotpink; padding: 10px;
+}
+
+.likeabutton {
+	text-decoration: none; font: menu;
+	display: inline-block; padding: 2px 8px;
+	background: ButtonFace; color: ButtonText;
+	border-style: solid; border-width: 2px;
+	border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
+}
+
+.likeabutton:active {
+	border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow;
+}
+
+.likeabutton {
+	appearance: button;
+	-moz-appearance: button;
+	-webkit-appearance: button;
+	text-decoration: none; font: menu; color: ButtonText;
+	display: inline-block; padding: 2px 8px;
+}
