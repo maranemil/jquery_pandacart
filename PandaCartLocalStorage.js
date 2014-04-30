@@ -2,7 +2,7 @@
  * jQuery PandaCart v1.0 Plugin
  * @author Emil Maran - (maran-emil.de)
  
- * @description Creates a cart functionality, working with json and cookie, 
+ * @description Creates a cart functionality, working with json and localStorage, 
  *              on the client side.
  *
  */
@@ -19,15 +19,15 @@
 				AppVersion:  "1.0",
 				AppAuthor:   "Emil Maran",
 				AppWebsite:  "maran-emil.de",
-				AppQtyLimit: "5"
+				AppQtyLimit: "5"				
 			};
 
 			var options=$.extend(defaults,options);
 
-			// create cookie if dosent exists
+			// create localStorage if doesnt exists
 			 $._initCart = function(){
 			
-				if(!$.cookie('addCart')){
+				if(!window.localStorage.getItem('addCart')){
 
 					var oCartCookie = 
 					{
@@ -38,7 +38,10 @@
 						"cartList":     {"":""}
 					};
 
-					$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' })
+					if (window.localStorage ) {
+						window.localStorage.setItem( 'addCart', JSON.stringify(oCartCookie) );	
+					}						
+					// $.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' })					
 				}
 			}
 			$._initCart();
@@ -50,7 +53,8 @@
 				var ProdName = sName;
 				var ProdPnkt = sPoints;
 				
-				if(!$.cookie('addCart')){
+				if(!window.localStorage.getItem('addCart')){
+					console.log("add !exists")
 
 					var ProdKey = $.md5(ProdIdNr, 'key', false)
 
@@ -72,12 +76,15 @@
 						}
 					};
 
-					$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
+					//$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
+					window.localStorage.setItem( 'addCart', JSON.stringify(oCartCookie) );
 
 				}
 				else{
-					// Cookie already exists
-					oCartCookie = JSON.parse($.cookie('addCart'));
+					console.log("add exists")
+					// localStorage already exists
+					//oCartCookie = JSON.parse($.cookie('addCart'));
+					oCartCookie = JSON.parse( window.localStorage.getItem('addCart'));
 					
 					var iCntProd = 0; 
 					var bProdExists = 0;
@@ -100,7 +107,8 @@
 						//console.log(addCartCookieAdd)
 					}
 
-					 $.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
+					 //$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
+					 window.localStorage.setItem( 'addCart', JSON.stringify(oCartCookie) );
 					 $.listCart();
 				}
 
@@ -116,7 +124,8 @@
 
 				//addCartCookieRemove = JSON.parse($.cookie('addCart'));
 				// var obj = jQuery.parseJSON('{"name":"John"}');
-				oCartCookie =   jQuery.parseJSON($.cookie('addCart'));
+				//oCartCookie =   jQuery.parseJSON($.cookie('addCart'));
+				oCartCookie = JSON.parse( window.localStorage.getItem('addCart'));
 
 				var iCntProd = 0; 
 				var bProdExists = 0;
@@ -149,9 +158,10 @@
 				oCartCookie.cartList = {"":""}
 				oCartCookie.cartList = cartListTmp;
 				
-				// write in cookie 
-				$.cookie('addCart', '', { domain: ''+location.host , path: '/' });
-				$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
+				// write in localStorage 
+				//$.cookie('addCart', '', { domain: ''+location.host , path: '/' });
+				//$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
+				window.localStorage.setItem( 'addCart', JSON.stringify(oCartCookie) );
 				$.listCart(); // list items 
 
 			}
@@ -165,9 +175,10 @@
 			 $.listCart = function(){
 			
 				//$("#cookie-log").html("<pre>"+$.cookie('addCart')+"</pre>");
-				$("#cookie-log").html(""+$.cookie('addCart')+"");
+				$("#cookie-log").html(""+JSON.stringify(JSON.parse( window.localStorage.getItem('addCart')))+"");
 
-				var oCartCookie =   jQuery.parseJSON($.cookie('addCart'));
+				//var oCartCookie =   jQuery.parseJSON($.cookie('addCart'));
+				var oCartCookie = JSON.parse( window.localStorage.getItem('addCart'));
 				var cartArray = stringToArray(oCartCookie.cartList);
 				var cartArrayHTML = "";
 				
@@ -189,7 +200,8 @@
 
 			 $.cleanCart = function(){
 			
-				oCartCookie =   jQuery.parseJSON($.cookie('addCart'));
+				//oCartCookie =   jQuery.parseJSON($.cookie('addCart'));
+				oCartCookie = JSON.parse( window.localStorage.getItem('addCart'));
 				var cartList = {}
 
 				var iCntProd = 0; 
@@ -205,8 +217,8 @@
 				});
 
 				oCartCookie.cartList = cartList;
-
-				$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
+				window.localStorage.setItem( 'addCart', JSON.stringify(oCartCookie) );
+				//$.cookie('addCart', JSON.stringify( oCartCookie), { domain: ''+location.host , path: '/' });
 				$.listCart();
 			
 			}
