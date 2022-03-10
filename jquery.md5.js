@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 /*
  * jQuery MD5 Plugin 1.2.1
  * https://github.com/blueimp/jQuery-MD5
@@ -28,7 +30,7 @@
     * to work around bugs in some JS interpreters.
     */
     function safe_add(x, y) {
-        var lsw = (x & 0xFFFF) + (y & 0xFFFF),
+        let lsw = (x & 0xFFFF) + (y & 0xFFFF),
             msw = (x >> 16) + (y >> 16) + (lsw >> 16);
         return (msw << 16) | (lsw & 0xFFFF);
     }
@@ -60,18 +62,18 @@
     }
 
     /*
-    * Calculate the MD5 of an array of little-endian words, and a bit length.
+    * Calculate the MD5 of an array of little-endian words, and a bit of length.
     */
     function binl_md5(x, len) {
         /* append padding */
         x[len >> 5] |= 0x80 << ((len) % 32);
         x[(((len + 64) >>> 9) << 4) + 14] = len;
 
-        var i, olda, oldb, oldc, oldd,
-            a =  1732584193,
+        let i, olda, oldb, oldc, oldd,
+            a = 1732584193,
             b = -271733879,
             c = -1732584194,
-            d =  271733878;
+            d = 271733878;
 
         for (i = 0; i < x.length; i += 16) {
             olda = a;
@@ -159,7 +161,7 @@
     * Convert an array of little-endian words to a string
     */
     function binl2rstr(input) {
-        var i,
+        let i,
             output = '';
         for (i = 0; i < input.length * 32; i += 8) {
             output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xFF);
@@ -172,7 +174,7 @@
     * Characters >255 have their high-byte silently ignored.
     */
     function rstr2binl(input) {
-        var i,
+        let i,
             output = [];
         output[(input.length >> 2) - 1] = undefined;
         for (i = 0; i < output.length; i += 1) {
@@ -195,7 +197,7 @@
     * Calculate the HMAC-MD5, of a key and some data (raw strings)
     */
     function rstr_hmac_md5(key, data) {
-        var i,
+        let i,
             bkey = rstr2binl(key),
             ipad = [],
             opad = [],
@@ -216,7 +218,7 @@
     * Convert a raw string to a hex string
     */
     function rstr2hex(input) {
-        var hex_tab = '0123456789abcdef',
+        let hex_tab = '0123456789abcdef',
             output = '',
             x,
             i;
